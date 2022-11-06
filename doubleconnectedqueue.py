@@ -1,3 +1,11 @@
+class QueueIsFullError(Exception):
+    pass
+
+
+class QueueIsEmptyError(Exception):
+    pass
+
+
 class ListQueue:
     class Node:
         def __init__(self, value=None, next=None):
@@ -17,7 +25,7 @@ class ListQueue:
 
     def get(self):
         if self.is_empty():
-            return 'error'
+            raise QueueIsEmptyError
         if self.q_size == 1:
             x = self.head.value
             self.head = self.Node()
@@ -49,14 +57,24 @@ class ListQueue:
         return self.q_size
 
 
-n = int(input())
-q = ListQueue()
-while n:
-    command = list(map(str, input().strip().split()))
-    if command[0] == 'get':
-        print(q.get())
-    elif command[0] == 'put':
-        q.put(int(command[1]))
-    elif command[0] == 'size':
-        print(q.size())
-    n -= 1
+def comm_handler(dek_q):
+    cmd, *args = input().split()
+    try:
+        return getattr(dek_q, cmd)(*args)
+    except AttributeError:
+        raise ValueError('Invalid input')
+    except QueueIsEmptyError:
+        return 'error'
+
+
+def main():
+    n = int(input())
+    q = ListQueue()
+    for _ in range(n):
+        result = comm_handler(q)
+        if result:
+            print(result)
+
+
+if __name__ == '__main__':
+    main()
