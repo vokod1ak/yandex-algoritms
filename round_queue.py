@@ -1,3 +1,11 @@
+class QueueIsFullError(Exception):
+    pass
+
+
+class QueueIsEmptyError(Exception):
+    pass
+
+
 class MyQueueSized:
     def __init__(self, max_size):
         self.queue = [None] * max_size
@@ -12,11 +20,11 @@ class MyQueueSized:
             self.tail = (self.tail + 1) % self.max_n
             self.q_size += 1
         else:
-            return print('error')
+            raise QueueIsFullError
 
     def pop(self):
         if self.q_size == 0:
-            return None
+            raise QueueIsEmptyError
         x = self.queue[self.head]
         self.queue[self.head] = None
         self.head = (self.head + 1) % self.max_n
@@ -30,17 +38,27 @@ class MyQueueSized:
         return self.q_size
 
 
-n = int(input())
-max_size = int(input())
-round_q = MyQueueSized(max_size)
-while n:
-    command = list(map(str, input().strip().split()))
-    if command[0] == 'pop':
-        print(round_q.pop())
-    elif command[0] == 'push':
-        round_q.push(int(command[1]))
-    elif command[0] == 'peek':
-        print(round_q.peek())
-    elif command[0] == 'size':
-        print(round_q.size())
-    n -= 1
+def comm_handler(dek_q):
+    cmd, *args = input().split()
+    try:
+        return getattr(dek_q, cmd)(*args)
+    except AttributeError:
+        raise ValueError('Invalid input')
+    except QueueIsFullError:
+        return 'error'
+    except QueueIsEmptyError:
+        return None
+
+
+def main():
+    n = int(input())
+    max_size = int(input())
+    round_q = MyQueueSized(max_size)
+    for _ in range(n):
+        result = comm_handler(round_q)
+        if result:
+            print(result)
+
+
+if __name__ == '__main__':
+    main()

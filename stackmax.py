@@ -1,3 +1,7 @@
+class QueueIsEmptyError(Exception):
+    pass
+
+
 class StackMaxEffective:
     def __init__(self):
         self.items = []
@@ -22,21 +26,32 @@ class StackMaxEffective:
             else:
                 self.items.pop()
         else:
-            print('error')
+            raise QueueIsEmptyError
 
     def get_max(self):
         if self.items:
             return self.current_max[-1]
         return None
 
-n = int(input())
-stack = StackMaxEffective()
-while n:
-    command = list(map(str, input().strip().split()))
-    if command[0] == 'pop':
-        stack.pop()
-    elif command[0] == 'push':
-        stack.push(int(command[1]))
-    elif command[0] == 'get_max':
-        print(stack.get_max())
-    n -= 1
+
+def comm_handler(dek_q):
+    cmd, *args = input().split()
+    try:
+        return getattr(dek_q, cmd)(*args)
+    except AttributeError:
+        raise ValueError('Invalid input')
+    except QueueIsEmptyError:
+        return 'error'
+
+
+def main():
+    n = int(input())
+    stack = StackMaxEffective()
+    for _ in range(n):
+        result = comm_handler(stack)
+        if result:
+            print(result)
+
+
+if __name__ == '__main__':
+    main()

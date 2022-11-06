@@ -22,5 +22,6 @@ def is_correct_bracket_seq(bracket_seq: List[str]) -> bool:
     else:
         return True
 
+
 seq = list(input().strip())
 print(is_correct_bracket_seq(seq))
