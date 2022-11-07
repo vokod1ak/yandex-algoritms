@@ -4,7 +4,7 @@ from typing import List, Tuple
 
 def form_map(house_list: List[int]) -> List[int]:
     non_zero_count: int = len(house_list) - 1
-    result: List[int] = [None] * len(house_list)
+    result: List[int] = [0] * len(house_list)
     for i in range(len(house_list)):
         if house_list[i] == 0:
             result[i] = 0
@@ -16,7 +16,7 @@ def form_map(house_list: List[int]) -> List[int]:
 
 
 def get_zero2(street: List[int]) -> List[int]:
-    result: List[int] = [None] * len(street)
+    result: List[int] = [0] * len(street)
     forward_run: List[int] = form_map(street)
     backward_run: List[int] = form_map(street[::-1])
     i: int = 0
