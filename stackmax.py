@@ -16,7 +16,6 @@ class StackMaxEffective:
             if item >= self.current_max[-1]:
                 self.items.append(item)
                 self.current_max.append(item)
-                self.current_max = list(sorted(self.current_max))
             else:
                 self.items.append(item)
         else:
