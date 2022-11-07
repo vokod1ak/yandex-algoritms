@@ -1,7 +1,3 @@
-class QueueIsFullError(Exception):
-    pass
-
-
 class QueueIsEmptyError(Exception):
     pass
 
@@ -72,7 +68,9 @@ def main():
     q = ListQueue()
     for _ in range(n):
         result = comm_handler(q)
-        if result:
+        if result is None:
+            continue
+        else:
             print(result)
 
 
