@@ -1,6 +1,7 @@
-# ID удачной посылки: https://contest.yandex.ru/contest/24735/run-report/75315748/
+# ID удачной посылки: https://contest.yandex.ru/contest/24735/run-report/75318722/
 def broken_search(nums, target):
-    left, right = 0, len(nums) - 1
+    left = 0
+    right = len(nums) - 1
     while left <= right:
         mid = (left + right) // 2
         if nums[mid] == target:
@@ -16,7 +17,6 @@ def broken_search(nums, target):
             else:
                 right = mid - 1
     return -1
-
 
 def test():
     arr = [0, 2, 6, 7, 8, 9, 10]
