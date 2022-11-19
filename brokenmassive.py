@@ -18,6 +18,7 @@ def broken_search(nums, target):
                 right = mid - 1
     return -1
 
+
 def test():
     arr = [0, 2, 6, 7, 8, 9, 10]
     assert broken_search(arr, 9) == 5
